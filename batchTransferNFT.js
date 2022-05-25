@@ -1,5 +1,5 @@
 const ethers = require('ethers');
-const { privateKey, addresses } = require('./variables.js');
+const { privateKey, addresses, infuraKey } = require('./variables.js');
 const { getABI } = require('./helpers.js');
 
 const main = async () => {
@@ -7,7 +7,7 @@ const main = async () => {
     const tokenId = '19131355645574737609070377326422335114467302896084141022817982400358760054909'; 
 
     // Connect to Infura, initialize wallet, and create signer by connecting to provider
-    const provider = new ethers.providers.InfuraProvider(network='matic', 'e187f1ca104a4170b00f2af13de0ccbf')
+    const provider = new ethers.providers.InfuraProvider(network='matic', infuraKey);
     const wallet = new ethers.Wallet(privateKey);
     const walletSigner = wallet.connect(provider);
 

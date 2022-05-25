@@ -1,8 +1,8 @@
 const ethers = require('ethers');
-const { addresses, privateKey } = require('./variables.js');
+const { addresses, privateKey, infuraKey } = require('./variables.js');
 
 const main = async () => {
-    const provider = new ethers.providers.InfuraProvider(network='matic', 'e187f1ca104a4170b00f2af13de0ccbf')
+    const provider = new ethers.providers.InfuraProvider(network='matic', infuraKey);
     const wallet = new ethers.Wallet(privateKey);
     const walletSigner = wallet.connect(provider);
 
