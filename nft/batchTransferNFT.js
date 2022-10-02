@@ -2,6 +2,7 @@ const ethers = require("ethers")
 const fs = require("fs/promises")
 const { addresses } = require("./nftVariables.js")
 const { getABI } = require("../utils/helpers.js")
+const prompt = require("prompt")
 require("dotenv").config({ path: require("find-config")(".env") })
 
 const main = async () => {
@@ -10,7 +11,7 @@ const main = async () => {
   const privateKey = process.env.PRIVATE_KEY
   const address = "0x2953399124F0cBB46d2CbACD8A89cF0599974963" // Opensea ERC1155 contract
   // const tokenId = "19131355645574737609070377326422335114467302896084141022817982401458271683060" // super holder nft
-  // const tokenId = ""
+  const tokenId = ""
 
   // Connect to Alchemy, initialize wallet, and create signer by connecting to provider
   const polygonProvider = new ethers.providers.AlchemyProvider(
@@ -33,35 +34,34 @@ const main = async () => {
   for (i = 0; i < addresses.length; i++) {
     // resolve ens names to address
     if (addresses[i].slice(-4) == ".eth") {
-      addresses[i] = await ethProvider.resolveName(addresses[i])
+      addresses[i] = await ethProvider.resolveName(addresses[i].toString())
     }
 
     const gas = await polygonProvider.getGasPrice()
 
-    console.log(gas)
     const overrides = {
       value: ethers.utils.parseUnits("0", "ether"),
       gasPrice: gas,
-      gasLimit: ethers.utils.hexlify(100000),
+      gasLimit: ethers.utils.hexlify(150000),
       nonce: nonce,
     }
 
-    // try {
-    //   // Transfer token to address
-    //   const transaction = await contract.safeTransferFrom(
-    //     wallet.address,
-    //     addresses[i],
-    //     tokenId,
-    //     1,
-    //     "0x00",
-    //     overrides
-    //   )
-    //   console.log(transaction)
-    // } catch (err) {
-    //   console.log(err)
-    //   fs.appendFile("./errors.txt", `Token transfer to address ${addresses[i]} failed.\n`)
-    // }
-    // nonce++
+    try {
+      // Transfer token to address
+      const transaction = await contract.safeTransferFrom(
+        wallet.address,
+        addresses[i],
+        tokenId,
+        1,
+        "0x00",
+        overrides
+      )
+      console.log(transaction)
+    } catch (err) {
+      console.log(err)
+      fs.appendFile("./errors.txt", `Token transfer to address ${addresses[i]} failed.\n`)
+    }
+    nonce++
   }
 }
 
