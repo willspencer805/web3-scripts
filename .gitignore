@@ -2,3 +2,5 @@ node_modules/
 *variables.js
 *.csv
 *.DS_Store
+.env
+nft/becMint.js
