@@ -1,8 +1,7 @@
 const ethers = require("ethers")
 const fs = require("fs/promises")
 const { addresses } = require("./nftVariables.js")
-const { getABI } = require("../utils/helpers.js")
-const prompt = require("prompt")
+const { abi } = require("./opensea1155Abi")
 require("dotenv").config({ path: require("find-config")(".env") })
 
 const main = async () => {
@@ -10,8 +9,8 @@ const main = async () => {
   const alchemyEthKey = process.env.ALCHEMY_ETH_KEY
   const privateKey = process.env.PRIVATE_KEY
   const address = "0x2953399124F0cBB46d2CbACD8A89cF0599974963" // Opensea ERC1155 contract
-  // const tokenId = "19131355645574737609070377326422335114467302896084141022817982401458271683060" // super holder nft
-  const tokenId = ""
+  const tokenId = "19131355645574737609070377326422335114467302896084141022817982401458271683060" // super holder nft
+  // const tokenId = ""
 
   // Connect to Alchemy, initialize wallet, and create signer by connecting to provider
   const polygonProvider = new ethers.providers.AlchemyProvider(
@@ -25,7 +24,7 @@ const main = async () => {
   const ethProvider = new ethers.providers.AlchemyProvider((network = "homestead"), alchemyEthKey)
 
   // Get contract abi and initialize contract instance with signer
-  const abi = await getABI(address)
+  // const abi = await getABI(address)
   const contract = new ethers.Contract(address, abi, walletSigner)
 
   // Grab first nonce to be used in transactions and increment it at the bottom of each loop
