@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "nft": "node nft/batchTransferNFT.js",
-    "ERC20": "node utils/batchTransferERC20.js",
     "holders": "node holders/getHolders.js"
   },
   "keywords": [],
