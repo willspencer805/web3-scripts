@@ -11,7 +11,7 @@ const main = async () => {
 
   // initialize headers for csv file
   await fs.appendFile("./numberHeldByAddress.csv", "address,numHeld\n")
-  const openseaContract = "0x2953399124F0cBB46d2CbACD8A89cF0599974963" // Opensea ERC1155 contract
+  const openseaContract = process.env.OPENSEA_1155_ADDRESS
   const baseURL = `https://polygon-mainnet.g.alchemyapi.io/v2/${alchemyPolygonKey}/getNFTs/`
 
   // initialize provider to resovle ens names
@@ -55,7 +55,7 @@ const main = async () => {
 
       console.log(`${addresses[i]} holds ${numHeld} blockchain guild tokens`)
     } catch (error) {
-      console.log(error)
+      console.error(error)
       fs.appendFile("./numberHeldByAddress.csv", `${null}\n`)
     }
   }

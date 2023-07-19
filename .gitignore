@@ -1,7 +1,6 @@
 node_modules/
-*variables.js
+holders/holderVariables.js
 *.csv
 *.DS_Store
 .env
-nft/becMint.js
 *.txt
